@@ -343,15 +343,7 @@
   .no-scrollbar { scrollbar-width: none; }
   .no-scrollbar::-webkit-scrollbar { display: none; }
 
-  /* Scroll reveal (progressively enhanced by <InteractionLayer/>) */
-  .js [data-reveal] {
-    opacity: 0;
-    transform: translate3d(0, 26px, 0);
-    transition: opacity 0.85s var(--ease-out-expo), transform 0.85s var(--ease-out-expo);
-    transition-delay: calc(var(--i, 0) * 70ms);
-  }
-  .js [data-reveal="scale"] { transform: scale(0.97); }
-  .js [data-reveal][data-shown="true"] { opacity: 1; transform: none; }
+  /* Scroll reveals are driven by InteractionLayer (Web Animations API); nothing to style here. */
 
   /* Cards */
   .card-media { transition: transform 1.1s var(--ease-out-expo); will-change: transform; }
@@ -448,7 +440,6 @@
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
   }
-  .js [data-reveal] { opacity: 1; transform: none; }
   [data-parallax] { transform: none !important; }
 }
 
