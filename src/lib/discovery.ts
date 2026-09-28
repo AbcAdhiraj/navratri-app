@@ -313,7 +313,7 @@ export function describeFilters(f: Filters): { title: string; accent: string | n
   if (day) bits.push(`on ${day}`);
   if (price && price !== "Free entry") bits.push(price.toLowerCase().replace("under", "under"));
   if (f.q) bits.push(`matching “${f.q}”`);
-  const accent = bits.length ? bits.join(" ") : where ? null : "across NCR";
+  const accent = bits.length ? bits.join(" ") : where ? null : "across all cities";
   const description = `${title} ${accent ?? ""}`.trim() + " — garba, dandiya and Navratri nights with verified dates, prices and entry rules.";
   return { title, accent, description };
 }

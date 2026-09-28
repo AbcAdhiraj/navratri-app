@@ -3,7 +3,7 @@
  * with explicit "unknown" states: `null` always means "not confirmed", never "no".
  */
 
-export const AREAS = ["delhi", "dwarka", "noida", "gurugram", "ghaziabad"] as const;
+export const AREAS = ["delhi", "dwarka", "noida", "gurugram", "ghaziabad", "mumbai", "pune", "bangalore"] as const;
 export type Area = (typeof AREAS)[number];
 
 export const EVENT_TYPES = [

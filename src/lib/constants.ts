@@ -3,7 +3,7 @@ import type { Area, EventType, MusicStyle, SourceKind, VibeTag } from "./types";
 export const SITE_NAME = "Navratri NCR";
 export const SITE_TAGLINE = "Your Navratri plans, sorted.";
 export const SITE_DESCRIPTION =
-  "Discover garba, dandiya, Bollywood and DJ Navratri nights across Delhi, Dwarka, Noida, Gurugram and Ghaziabad — with verified dates, prices and entry rules.";
+  "Discover garba, dandiya, Bollywood and DJ Navratri nights across Delhi NCR, Mumbai, Pune and Bangalore — with verified dates, prices and entry rules.";
 
 export function siteUrl(path = "") {
   const base = (process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000").replace(/\/$/, "");
@@ -25,6 +25,9 @@ export const AREA_META: Record<Area, { label: string; short: string; blurb: stri
   noida: { label: "Noida", short: "NOI", blurb: "Sector lawns, stadium nights & RWA circles" },
   gurugram: { label: "Gurugram", short: "GGN", blurb: "Big productions, DJ nights & rooftop raas" },
   ghaziabad: { label: "Ghaziabad", short: "GZB", blurb: "Indirapuram circles & community pandals" },
+  mumbai: { label: "Mumbai", short: "BOM", blurb: "Big-stage dandiya, society garba & suburban raas" },
+  pune: { label: "Pune", short: "PNQ", blurb: "Society lawns, club nights & college dandiya" },
+  bangalore: { label: "Bangalore", short: "BLR", blurb: "Community garba & weekend dandiya nights" },
 };
 
 export const EVENT_TYPE_META: Record<EventType, { label: string; plural: string }> = {
