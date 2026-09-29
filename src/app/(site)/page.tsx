@@ -49,14 +49,15 @@ export default async function HomePage() {
       <Hero events={events} posters={featured.length >= 3 ? featured : sortEvents(events)} />
       <DiscoveryControl countsByDate={countByDate(events)} countsByArea={areaCounts} total={events.length} />
       <TonightSection events={events} initialDate={focus.date} today={inFestival ? today : null} />
+      {byId["listed"] && <RailSection section={byId["listed"]} tone="paper2" />}
       <Spotlight events={featured.filter((e) => e.scale === "large").concat(featured.filter((e) => e.scale !== "large"))} />
+      {byId["big-nights"] && <RailSection section={byId["big-nights"]} tone="paper" />}
       <VibeGrid events={events} />
       {byId["garba-guide"] && <RailSection section={byId["garba-guide"]} tone="paper" />}
       <LocalityGrid events={events} />
       {byId["after-dark"] && <RailSection section={byId["after-dark"]} tone="ink" />}
       <BudgetSection under={byId["under-500"]} free={byId["free"]} />
       {byId["community"] && <RailSection section={byId["community"]} tone="paper2" />}
-      {byId["big-nights"] && !featured.length && <RailSection section={byId["big-nights"]} />}
       <section aria-label="Browse everything" className="bg-paper-2 pb-24 pt-4">
         <div className="mx-auto flex max-w-[90rem] flex-col items-center px-4 text-center md:px-8">
           <p className="t-serif text-2xl text-ink-soft md:text-3xl">Still deciding?</p>

@@ -39,7 +39,7 @@ export function TonightSection({ events, initialDate, today }: { events: EventRe
               <span className="t-serif text-sindoor">, sorted.</span>
             </h2>
             <p className="t-body mt-3 text-ink-soft" aria-live="polite">
-              <b className="text-ink tabular">{list.length}</b> event{list.length === 1 ? "" : "s"} across NCR on {formatDay(date, { weekday: true })}.
+              <b className="text-ink tabular">{list.length}</b> event{list.length === 1 ? "" : "s"} across all cities on {formatDay(date, { weekday: true })}.
             </p>
           </div>
           <Link href={`/events?date=${date}`} className="btn btn-outline btn-sm self-start md:self-auto">

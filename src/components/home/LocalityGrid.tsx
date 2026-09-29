@@ -10,13 +10,19 @@ export function LocalityGrid({ events }: { events: EventRecord[] }) {
   return (
     <section id="localities" aria-labelledby="localities-title" className="grain relative scroll-mt-20 bg-paper py-24 md:py-32">
       <div className="relative z-10 mx-auto max-w-[90rem] px-4 md:px-8 lg:px-12">
-        <SectionHeader id="localities-title" kicker="Around you" title="Pick a city," accent="find your circle." blurb="From Dwarka society lawns to Gurugram arenas — browse Navratri by where you’ll actually be." />
-        <div className="grid gap-3 md:grid-cols-4 md:grid-rows-2 md:gap-4">
+        <SectionHeader id="localities-title" kicker="Around you" title="Pick a city," accent="find your circle." blurb="From Dwarka society lawns to Mumbai’s big stages — browse Navratri by where you’ll actually be." />
+        <div className="grid gap-3 md:grid-cols-4 md:gap-4">
           <div data-reveal className="md:col-span-2 md:row-span-2">
             <LocalityCard summary={lead} size="lg" className="min-h-[22rem] md:min-h-full" />
           </div>
           {rest.map((a, i) => (
-            <div key={a.area} data-reveal style={{ "--i": i + 1 } as React.CSSProperties}>
+            <div
+              key={a.area}
+              data-reveal
+              style={{ "--i": Math.min(i + 1, 6) } as React.CSSProperties}
+              // The lead fills 4 cells; let the last card absorb any leftover so the grid closes cleanly.
+              className={i === rest.length - 1 ? ["", "md:col-span-4", "md:col-span-3", "md:col-span-2"][(4 + rest.length) % 4] : undefined}
+            >
               <LocalityCard summary={a} className="min-h-[15rem]" />
             </div>
           ))}

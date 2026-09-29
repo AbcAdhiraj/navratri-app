@@ -132,9 +132,58 @@ const free: Price = { status: "free", minInr: null, maxInr: null, note: "Free en
 const unknown: Price = { status: "unknown", minInr: null, maxInr: null, note: null };
 const ALL = [11, 12, 13, 14, 15, 16, 17, 18, 19];
 
+/**
+ * Sample events taken from public District listings surfaced by a web search on 2026-09-28
+ * (the ticketing sites themselves are not reachable from our build environment).
+ * Title, venue, dates and start time come from the listing; nothing else is claimed:
+ * price is unknown, no vibe/entry facts, no photos, and the booking link is NOT marked verified.
+ * They stay flagged as DEMO until a moderator checks them against the live listing.
+ */
+interface ListedInput {
+  name: string;
+  area: Area;
+  locality: string;
+  venue: string;
+  days: number[];
+  start: string | null;
+  types: EventType[];
+  url: string;
+  featured?: boolean;
+}
+
+function listed(i: ListedInput): EventRecord {
+  const e = demo({
+    name: i.name,
+    tagline: "Spotted on a District listing — details not yet verified by us.",
+    description:
+      "Sample entry based on a public District listing. Only the name, venue, dates and start time were taken from the listing; price, entry rules and music haven’t been checked. Confirm everything on the organizer’s page before you go.",
+    area: i.area,
+    locality: i.locality,
+    venue: i.venue,
+    days: i.days,
+    start: i.start,
+    end: null,
+    price: unknown,
+    types: i.types,
+    music: [],
+    featured: i.featured,
+    checked: null,
+  });
+  const source = { id: `${e.id}-src-1`, kind: "ticketing" as const, label: "District listing (not yet verified)", url: i.url, checkedAt: null };
+  return {
+    ...e,
+    organizer: null,
+    sources: [source],
+    booking: { url: i.url, platform: "District", verified: false },
+    verification: { dateChecked: false, priceChecked: false, entryChecked: false, lastCheckedAt: null },
+  };
+}
+
 export function buildFixtures(): EventRecord[] {
   counter = 0;
   return [
+    ...buildListed(),
+    ...buildOtherCities(),
     demo({
       name: "Midnight Garba",
       tagline: "Nine nights, one giant circle, and a DJ that takes over after 11.",
@@ -693,6 +742,197 @@ export function buildFixtures(): EventRecord[] {
       sources: ["ticketing"],
       featured: true,
       scale: "mid",
+    }),
+  ];
+}
+
+function buildListed(): EventRecord[] {
+  const DISTRICT_NAVRATRI = "https://www.district.in/events/book-navratri-events";
+  return [
+    listed({
+      name: "Shubharambh 2026 | Delhi’s Biggest Disco Dandiya Festival",
+      area: "delhi",
+      locality: "Pragati Maidan",
+      venue: "Bharat Mandapam",
+      days: [16, 17, 18],
+      start: "16:00",
+      types: ["dandiya", "ticketed"],
+      url: "https://www.district.in/events/shubharambh-delhis-biggest-disco-dandiya-festival-buy-tickets",
+      featured: true,
+    }),
+    listed({
+      name: "Raatri Raaga – The Raas Affair",
+      area: "delhi",
+      locality: "Lodhi Road",
+      venue: "Jawaharlal Nehru Stadium",
+      days: [16, 17, 18],
+      start: "16:00",
+      types: ["garba", "ticketed"],
+      url: "https://www.district.in/events/navratri-in-new-delhi-book-tickets",
+    }),
+    listed({
+      name: "Shubharambh 2026 | Gurugram’s Biggest Disco Dandiya Festival",
+      area: "gurugram",
+      locality: "Cyber City",
+      venue: "DLF CyberHub",
+      days: [17, 18],
+      start: "16:00",
+      types: ["dandiya", "ticketed"],
+      url: DISTRICT_NAVRATRI,
+    }),
+    listed({
+      name: "The Great Indian Garba Fest 4.0",
+      area: "noida",
+      locality: "Sector 38A",
+      venue: "Worlds of Wonder",
+      days: [16, 17, 18],
+      start: "17:00",
+      types: ["garba", "ticketed"],
+      url: DISTRICT_NAVRATRI,
+      featured: true,
+    }),
+    listed({
+      name: "Dandiya Dhamaal 2026 ft. Sapna Chaudhary",
+      area: "noida",
+      locality: "Greater Noida",
+      venue: "India Exposition Mart (IEML)",
+      days: [16, 17, 18],
+      start: "17:00",
+      types: ["dandiya", "ticketed"],
+      url: "https://www.district.in/events/dandiya-dhamaal-2026-ft-sapna-chaudhary-oct16-2026-buy-tickets",
+      featured: true,
+    }),
+    listed({
+      name: "Ikigai Dandiya Nights 2026",
+      area: "noida",
+      locality: "Noida",
+      venue: "Ikigai Farm",
+      days: [17, 18],
+      start: "19:00",
+      types: ["dandiya", "ticketed"],
+      url: "https://www.district.in/events/ikigai-dandiya-nights-2026-noida-oct17-2026-buy-tickets",
+    }),
+  ];
+}
+
+/** Fictional DEMO events for the cities beyond NCR. */
+function buildOtherCities(): EventRecord[] {
+  return [
+    demo({
+      name: "Borivali Raas Garba",
+      tagline: "Nine nights of big-circle garba in the western suburbs.",
+      description: "A fictional large-ground garba with a live singer and a Bollywood last hour.",
+      area: "mumbai",
+      locality: "Borivali",
+      venue: "Demo Suburban Grounds",
+      days: ALL,
+      start: "19:30",
+      end: "23:30",
+      price: paid(699, 2499),
+      types: ["garba", "ticketed"],
+      music: ["traditional_garba", "live_band", "bollywood"],
+      vibes: [
+        ["traditional_garba", "Gujarati garba with live singer"],
+        ["live_music", "live singer and dhol"],
+        ["large_scale", "multi-circle grounds"],
+      ],
+      entry: { groupsAllowed: true, familiesWelcome: true },
+      booking: { platform: "Demo Tickets", verified: true },
+      sources: ["organizer", "ticketing"],
+      featured: true,
+      scale: "large",
+    }),
+    demo({
+      name: "Powai Lakeside Dandiya",
+      tagline: "Sticks by the lake, DJ after ten.",
+      description: "A fictional two-night dandiya with a DJ second half.",
+      area: "mumbai",
+      locality: "Powai",
+      venue: "Demo Lakeside Lawn",
+      days: [16, 17],
+      start: "19:00",
+      end: "23:59",
+      price: paid(899),
+      types: ["dandiya", "dj_edm"],
+      music: ["dandiya_beats", "dj_edm"],
+      vibes: [
+        ["dandiya_night", "dandiya from 7 PM"],
+        ["dj_night", "DJ from 10 PM"],
+      ],
+      booking: { platform: "Demo Tickets", verified: true },
+      sources: ["ticketing"],
+      scale: "mid",
+    }),
+    demo({
+      name: "Kothrud Society Garba",
+      tagline: "Free, friendly and full of families.",
+      description: "A fictional free society garba across the second weekend.",
+      area: "pune",
+      locality: "Kothrud",
+      venue: "Demo Society Lawn",
+      days: [16, 17, 18],
+      price: free,
+      types: ["garba", "society_rwa", "community"],
+      music: ["traditional_garba", "bollywood"],
+      vibes: [["family_friendly", "families and kids welcome"]],
+      entry: { familiesWelcome: true, groupsAllowed: true },
+      verified: { entry: true },
+      sources: ["community"],
+      scale: "intimate",
+    }),
+    demo({
+      name: "Koregaon Park Dandiya Night",
+      tagline: "A club-lawn dandiya with a Bollywood finish.",
+      description: "A fictional ticketed dandiya on club lawns.",
+      area: "pune",
+      locality: "Koregaon Park",
+      venue: "Demo Club Lawns",
+      days: [17, 18],
+      start: "19:30",
+      end: "23:30",
+      price: paid(599),
+      types: ["dandiya", "bollywood", "ticketed"],
+      music: ["dandiya_beats", "bollywood"],
+      vibes: [["bollywood_mix", "Bollywood set from 10 PM"]],
+      booking: { platform: "Demo Tickets", verified: true },
+      sources: ["ticketing"],
+      scale: "mid",
+    }),
+    demo({
+      name: "Whitefield Garba Utsav",
+      tagline: "Three nights of garba for the tech corridor.",
+      description: "A fictional community garba with a beginners’ circle.",
+      area: "bangalore",
+      locality: "Whitefield",
+      venue: "Demo Convention Lawn",
+      days: [16, 17, 18],
+      start: "19:00",
+      end: "22:30",
+      price: paid(399),
+      types: ["garba", "community", "ticketed"],
+      music: ["traditional_garba", "bollywood"],
+      vibes: [["traditional_garba", "traditional garba with a beginners’ circle"]],
+      entry: { groupsAllowed: true, stagsAllowed: true, familiesWelcome: true },
+      booking: { platform: "Demo Passes", verified: true },
+      verified: { entry: true },
+      featured: true,
+      scale: "mid",
+    }),
+    demo({
+      name: "Koramangala Dandiya Social",
+      tagline: "A weekend dandiya — price still to be confirmed.",
+      description: "A fictional event whose price hasn’t been published yet.",
+      area: "bangalore",
+      locality: "Koramangala",
+      venue: "Demo Community Hall",
+      days: [17],
+      start: "19:30",
+      end: "23:00",
+      price: unknown,
+      types: ["dandiya", "community"],
+      music: ["dandiya_beats"],
+      sources: ["social"],
+      scale: "intimate",
     }),
   ];
 }

@@ -1,37 +1,50 @@
 "use client";
 
 import { useEffect } from "react";
-import { usePathname } from "next/navigation";
 
 /**
  * One tiny global client component that powers:
- *  - scroll reveals for any [data-reveal] element (IntersectionObserver)
+ *  - scroll reveals for [data-reveal] (Web Animations API — never mutates React-managed attributes)
  *  - pointer-aware card shine (sets --mx/--my on [data-shine])
  *  - the scroll offset (--sy) that drives CSS parallax on [data-parallax] elements
  * Everything degrades to static content without JS or with reduced motion.
  */
 export function InteractionLayer() {
-  const pathname = usePathname();
-
   useEffect(() => {
     document.documentElement.classList.add("js");
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+    // Scroll reveals via the Web Animations API: no attributes or classes are written to
+    // React-managed nodes, so this can run before, during or after hydration safely.
+    const HIDDEN: Keyframe = { opacity: 0, transform: "translate3d(0, 26px, 0)" };
+    const holds = new WeakMap<Element, Animation>();
+    const seen = new WeakSet<Element>();
     const io = new IntersectionObserver(
       (entries) => {
         for (const e of entries) {
-          if (e.isIntersecting) {
-            (e.target as HTMLElement).dataset.shown = "true";
-            io.unobserve(e.target);
-          }
+          if (!e.isIntersecting) continue;
+          const el = e.target as HTMLElement;
+          io.unobserve(el);
+          holds.get(el)?.cancel();
+          const i = Number(getComputedStyle(el).getPropertyValue("--i")) || 0;
+          el.animate([HIDDEN, { opacity: 1, transform: "none" }], { duration: 850, delay: Math.min(i, 6) * 70, easing: "cubic-bezier(0.16, 1, 0.3, 1)", fill: "backwards" });
         }
       },
       { rootMargin: "0px 0px -8% 0px", threshold: 0.08 },
     );
-    const observeAll = () =>
-      document.querySelectorAll<HTMLElement>("[data-reveal]:not([data-shown])").forEach((el) => io.observe(el));
-    observeAll();
-    const mo = new MutationObserver(observeAll);
+    const scan = () => {
+      if (reduce) return;
+      const vh = window.innerHeight;
+      document.querySelectorAll<HTMLElement>("[data-reveal]").forEach((el) => {
+        if (seen.has(el)) return;
+        seen.add(el);
+        if (el.getBoundingClientRect().top < vh) return; // already on screen: leave it be
+        holds.set(el, el.animate([HIDDEN, HIDDEN], { duration: 1, fill: "forwards" }));
+        io.observe(el);
+      });
+    };
+    scan();
+    const mo = new MutationObserver(scan);
     mo.observe(document.body, { childList: true, subtree: true });
 
     const onMove = (ev: PointerEvent) => {
@@ -67,7 +80,7 @@ export function InteractionLayer() {
       window.removeEventListener("scroll", onScroll);
       if (raf) cancelAnimationFrame(raf);
     };
-  }, [pathname]);
+  }, []);
 
   return null;
 }

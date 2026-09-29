@@ -54,7 +54,7 @@ export function Footer() {
               </span>
             </div>
             <p className="t-meta mt-4 max-w-xs text-cream-dim">
-              An independent guide to Navratri nights across Delhi, Dwarka, Noida, Gurugram and Ghaziabad. We link to organizers and ticketing platforms — we never sell tickets.
+              An independent guide to Navratri nights across Delhi NCR, Mumbai, Pune and Bangalore. We link to organizers and ticketing platforms — we never sell tickets.
             </p>
           </div>
           {COLS.map((c) => (

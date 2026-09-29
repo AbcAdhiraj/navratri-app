@@ -13,6 +13,9 @@ export const AREA_HUE: Record<Area, { bg: string; ink: boolean; ring: string }> 
   noida: { bg: "#1f2f6d", ink: false, ring: "#f3b61f" },
   gurugram: { bg: "#1e1713", ink: false, ring: "#e46f1a" },
   ghaziabad: { bg: "#3c6a32", ink: false, ring: "#f3b61f" },
+  mumbai: { bg: "#c81e68", ink: false, ring: "#f3b61f" },
+  pune: { bg: "#e46f1a", ink: true, ring: "#1f2f6d" },
+  bangalore: { bg: "#93160f", ink: false, ring: "#f3b61f" },
 };
 
 export function LocalityCard({ summary, size = "md", className }: { summary: AreaSummary; size?: "md" | "lg"; className?: string }) {

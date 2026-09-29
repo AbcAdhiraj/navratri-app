@@ -102,7 +102,7 @@ export function EventsExplorer({ events, initial }: { events: EventRecord[]; ini
               size="sm"
               value={f.area ?? "all"}
               onChange={(v) => update({ ...f, area: v === "all" ? null : v, locality: null })}
-              options={[{ value: "all", label: "All NCR" }, ...AREAS.map((a) => ({ value: a, label: AREA_META[a].label }))]}
+              options={[{ value: "all", label: "All cities" }, ...AREAS.map((a) => ({ value: a, label: AREA_META[a].label }))]}
             />
           </div>
           <div className="no-scrollbar -mr-4 flex min-w-0 flex-1 gap-1.5 overflow-x-auto pr-4 md:mr-0 md:pr-0 lg:[&>*:first-child]:ml-auto" role="group" aria-label="Night">

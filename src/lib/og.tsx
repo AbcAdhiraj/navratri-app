@@ -78,7 +78,7 @@ export async function siteOgImage() {
           <div style={{ display: "flex", fontSize: 26, color: "#f4ecdd", letterSpacing: 5 }}>SHARAD NAVRATRI · 11–19 OCT 2026</div>
           <div style={{ display: "flex", fontFamily: "Bricolage", fontSize: 150, lineHeight: 0.86, color: "#f4ecdd", marginTop: 26, letterSpacing: -5 }}>NCR,</div>
           <div style={{ display: "flex", fontFamily: "Bricolage", fontSize: 150, lineHeight: 0.9, color: "#f3b61f", letterSpacing: -5, textShadow: "7px 7px 0 #1e1713" }}>LET’S GARBA.</div>
-          <div style={{ display: "flex", fontSize: 30, color: "#f4ecdd", marginTop: 30, maxWidth: 640 }}>Garba, dandiya & Navratri nights across Delhi NCR — checked at the source.</div>
+          <div style={{ display: "flex", fontSize: 30, color: "#f4ecdd", marginTop: 30, maxWidth: 640 }}>Garba & dandiya nights across Delhi NCR, Mumbai, Pune & Bangalore.</div>
         </div>
       </div>
     ),

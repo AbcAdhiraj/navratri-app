@@ -22,7 +22,7 @@ const sans = Manrope({ subsets: ["latin"], variable: "--font-manrope", display: 
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl()),
-  title: { default: `${SITE_NAME} — Garba, Dandiya & Navratri nights across NCR`, template: `%s · ${SITE_NAME}` },
+  title: { default: `${SITE_NAME} — Garba, Dandiya & Navratri nights in Delhi NCR, Mumbai, Pune & Bangalore`, template: `%s · ${SITE_NAME}` },
   description: SITE_DESCRIPTION,
   applicationName: SITE_NAME,
   alternates: { canonical: "/" },

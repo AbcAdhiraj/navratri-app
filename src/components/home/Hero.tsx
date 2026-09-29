@@ -91,7 +91,7 @@ export function Hero({ events, posters }: { events: EventRecord[]; posters: Even
         </h1>
         <div className="mt-8 flex max-w-xl animate-rise flex-col gap-6 md:mt-10" style={{ animationDelay: "0.6s" }}>
           <p className="text-lg font-medium leading-relaxed text-cream md:text-xl">
-            Garba, dandiya, Bollywood and DJ nights across Delhi, Dwarka, Noida, Gurugram &amp; Ghaziabad — with dates, prices and entry rules checked at the source.
+            Garba, dandiya, Bollywood and DJ nights across Delhi NCR, Mumbai, Pune &amp; Bangalore — with dates, prices and entry rules checked at the source.
           </p>
           <div className="flex flex-wrap items-center gap-3">
             <span className="inline-flex items-center gap-2.5 rounded-full border-[1.5px] border-ink bg-ink py-2 pl-2.5 pr-4 text-sm font-bold text-cream">

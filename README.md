@@ -1,6 +1,6 @@
 # Navratri NCR
 
-**What are we doing for Navratri tonight?** — a consumer discovery site for garba, dandiya, Bollywood and DJ Navratri nights across Delhi, Dwarka, Noida, Gurugram and Ghaziabad, with dates, prices and entry rules checked at the source.
+**What are we doing for Navratri tonight?** — a consumer discovery site for garba, dandiya, Bollywood and DJ Navratri nights across Delhi NCR (Delhi, Dwarka, Noida, Gurugram, Ghaziabad), Mumbai, Pune and Bangalore, with dates, prices and entry rules checked at the source.
 
 Built with Next.js 16 (App Router, Turbopack), React 19, TypeScript, Tailwind CSS v4 and Supabase. Deploys to Vercel.
 

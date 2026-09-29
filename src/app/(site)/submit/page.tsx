@@ -6,7 +6,7 @@ import { getPublishedEvents } from "@/lib/data";
 
 export const metadata: Metadata = {
   title: "Suggest an event or a correction",
-  description: "Know a garba, dandiya or Navratri night in NCR we’re missing — or spotted a wrong detail? Send it with a source; a moderator checks everything before it goes live.",
+  description: "Know a garba, dandiya or Navratri night in your city we’re missing — or spotted a wrong detail? Send it with a source; a moderator checks everything before it goes live.",
   alternates: { canonical: "/submit" },
 };
 

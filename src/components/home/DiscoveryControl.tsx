@@ -55,7 +55,7 @@ export function DiscoveryControl({ countsByDate, countsByArea, total }: { counts
 
   const values: Record<Seg, string> = {
     date: s.date ? formatDay(s.date, { weekday: true }) : "Any night",
-    area: s.area ? AREA_META[s.area].label : "All of NCR",
+    area: s.area ? AREA_META[s.area].label : "All cities",
     vibe: s.vibe ? VIBE_OPTIONS.find((v) => v.id === s.vibe)!.label : "Any vibe",
     price: s.price ? PRICE_BUCKETS.find((p) => p.id === s.price)!.label : "Any price",
   };
@@ -212,7 +212,7 @@ export function DiscoveryControl({ countsByDate, countsByArea, total }: { counts
             <Icon name="sliders" className="shrink-0 text-sindoor" />
             <span className="min-w-0">
               <span className="block truncate text-sm font-bold">{hasAny ? [s.date && values.date, s.area && values.area, s.vibe && values.vibe, s.price && values.price].filter(Boolean).join(" · ") : "Date · City · Vibe · Price"}</span>
-              <span className="block text-xs text-ink-soft">{hasAny ? "Tap to change" : `${total} events across NCR`}</span>
+              <span className="block text-xs text-ink-soft">{hasAny ? "Tap to change" : `${total} events across ${Object.keys(countsByArea).length} cities`}</span>
             </span>
           </button>
           <button type="button" onClick={explore} className="btn btn-red !px-4 !py-3" aria-label="Explore events">

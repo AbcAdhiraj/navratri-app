@@ -198,7 +198,16 @@ const MIN_SECTION = 3;
 
 export function editorialSections(events: EventRecord[]): Section[] {
   const s = sortEvents(events);
+  const onPlatform = (e: EventRecord) => e.sources.some((x) => x.kind === "ticketing" && /district\.in|bookmyshow\.com/.test(x.url));
   const sections: Section[] = [
+    {
+      id: "listed",
+      kicker: "Just listed",
+      title: "Fresh on the ticketing sites",
+      blurb: "Picked up from public District listings. Not verified by us yet — check the listing before you book.",
+      events: s.filter(onPlatform),
+      href: "/events?type=ticketed",
+    },
     {
       id: "garba-guide",
       kicker: "The Garba Guide",
@@ -212,7 +221,7 @@ export function editorialSections(events: EventRecord[]): Section[] {
       kicker: "Big Nights",
       title: "Stages, lights, thousands in the circle",
       blurb: "Large ticketed productions worth planning the whole evening around.",
-      events: s.filter((e) => e.scale === "large" && e.types.includes("ticketed")),
+      events: s.filter((e) => e.types.includes("ticketed") && (e.scale === "large" || e.featured)),
       href: "/events?type=ticketed",
     },
     {
@@ -304,7 +313,7 @@ export function describeFilters(f: Filters): { title: string; accent: string | n
   if (day) bits.push(`on ${day}`);
   if (price && price !== "Free entry") bits.push(price.toLowerCase().replace("under", "under"));
   if (f.q) bits.push(`matching “${f.q}”`);
-  const accent = bits.length ? bits.join(" ") : where ? null : "across NCR";
+  const accent = bits.length ? bits.join(" ") : where ? null : "across all cities";
   const description = `${title} ${accent ?? ""}`.trim() + " — garba, dandiya and Navratri nights with verified dates, prices and entry rules.";
   return { title, accent, description };
 }
